@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profil - PeppeyStoreID</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(
+          rgba(0, 0, 0, 0.65),
+          rgba(0, 0, 0, 0.65)
+        ),
+        url("image/1353620.jpeg") no-repeat center center fixed;
+      background-size: cover;
+      color: #eee;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    header h1 {
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 1.5px;
+      color: #27ae60;
+      margin: 0;
+      user-select: none;
+    }
+
+    .icon-button {
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #eee;
+      transition: color 0.3s ease, transform 0.3s ease;
+      user-select: none;
+    }
+
+    .icon-button:hover {
+      color: #2ecc71;
+      transform: scale(1.3);
+    }
+
+    .profile {
+      margin: 40px 20px 30px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px 20px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+    }
+
+    .profile .avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #27ae60;
+      box-shadow: 0 6px 15px rgba(39, 174, 96, 0.7);
+      transition: transform 0.4s ease;
+      margin-bottom: 20px;
+    }
+
+    .profile .avatar:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 10px 25px rgba(39, 174, 96, 0.9);
+    }
+
+    .profile p {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #27ae60;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+      margin: 0;
+      user-select: none;
+    }
+
+    .link-list {
+      max-width: 480px;
+      width: 90%;
+      margin: 0 auto 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 16px 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      text-decoration: none;
+      color: #d0f0c0;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      backdrop-filter: blur(6px);
+      user-select: none;
+    }
+
+    .link-item:hover {
+      background: #27ae60;
+      color: #fff;
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(39, 174, 96, 0.8);
+    }
+
+    .link-item img {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      margin-right: 18px;
+      object-fit: cover;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .link-item:hover img {
+      transform: scale(1.1);
+      box-shadow: 0 6px 18px rgba(39, 174, 96, 0.7);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 200;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.35s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal-content {
+      background: #121212;
+      color: #d0f0c0;
+      padding: 30px 35px;
+      border-radius: 20px;
+      width: 350px;
+      max-width: 90%;
+      box-shadow: 0 10px 30px rgba(39, 174, 96, 0.8);
+      text-align: center;
+      position: relative;
+      animation: scaleUp 0.35s ease forwards;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    @keyframes scaleUp {
+      from {
+        transform: scale(0.85);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal-content h3 {
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      color: #2ecc71;
+      text-shadow: 0 0 8px #27ae60;
+    }
+
+    .modal-content input {
+      width: 90%;
+      padding: 12px 15px;
+      border-radius: 12px;
+      border: 2px solid #27ae60;
+      background: #222;
+      color: #d0f0c0;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+      user-select: text;
+    }
+
+    .modal-content input:focus {
+      border-color: #2ecc71;
+      box-shadow: 0 0 8px #2ecc71;
+    }
+
+    .modal-content button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 12px;
+      background: #27ae60;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      user-select: none;
+    }
+
+    .modal-content button:hover {
+      background: #2ecc71;
+      box-shadow: 0 0 15px #2ecc71;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.8rem;
+      color: #999;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+
+    .close-btn:hover {
+      color: #2ecc71;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.2rem;
+      }
+
+      .profile {
+        padding: 25px 15px;
+      }
+
+      .profile .avatar {
+        width: 110px;
+        height: 110px;
+        margin-bottom: 15px;
+      }
+
+      .profile p {
+        font-size: 1.3rem;
+      }
+
+      .link-list {
+        max-width: 100%;
+      }
+
+      .link-item {
+        font-size: 1rem;
+        padding: 12px 15px;
+      }
+
+      .link-item img {
+        width: 44px;
+        height: 44px;
+        margin-right: 12px;
+      }
+
+      .modal-content {
+        width: 90%;
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="icon-button" title="Menu">&#9776;</div>
+    <h1>Home</h1>
+    <div class="icon-button" title="Cari">&#128269;</div>
+  </header>
+
+  <section class="profile" aria-label="Profil PeppeyID Store">
+    <img class="avatar" src="image/Banner.jpg" alt="Foto Profil PeppeyID" />
+    <p>PeppeyID Store.com</p>
+  </section>
+
+  <nav class="link-list" aria-label="Daftar tautan penting">
+    <a href="https://www.itemku.com/t/peppeyid?search_keyword=PeppeyID&searchquery=PeppeyID&from=searchhomepage" class="link-item" target="_blank" rel="noopener noreferrer">
+      <img src="image/—୨★୧.jpg" alt="Logo Toko PeppeyID" />
+      <span>TOKO PEPEYID</span>
+    </a>
+    <a href="https://discord.gg/gdHFsyTdUD" class="link-item" target="_blank" rel="noopener noreferrer">
+      <img src="image/Dc.jpg" alt="Logo Discord Noumui" />
+      <span>Discord Noumui</span>
+    </a>
+    <a href="index2.html" class="link-item">
+      <img src="image/♡.jpg" alt="Logo WhatsApp Admin" />
+      <span>WA Admin (hanya chat)</span>
+    </a>
+    <a href="#" class="link-item" onclick="openModal()" role="button" aria-haspopup="dialog" aria-controls="tokenModal" aria-expanded="false">
+      <img src="image/ᕘSparkleᕚ.jpg" alt="Akses Rahasia" />
+      <span>Saluran WA (Token) Hanya cs server</span>
+    </a>
+  </nav>
+
+  <!-- Modal -->
+  <div id="tokenModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()" role="button" aria-label="Tutup modal">&times;</span>
+      <h3 id="modalTitle">Masukan Token</h3>
+      <input type="password" id="tokenInput" placeholder="Token..." aria-describedby="tokenHelp" />
+      <button onclick="checkToken()">Submit</button>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById("tokenModal");
+    const tokenInput = document.getElementById("tokenInput");
+    const linkButton = document.querySelector('a[onclick="openModal()"]');
+
+    function openModal() {
+      modal.style.display = "flex";
+      modal.setAttribute("aria-hidden", "false");
+      linkButton.setAttribute("aria-expanded", "true");
+      tokenInput.focus();
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+      modal.setAttribute("aria-hidden", "true");
+      linkButton.setAttribute("aria-expanded", "false");
+      tokenInput.value = "";
+    }
+
+    function checkToken() {
+      const token = tokenInput.value.trim();
+      if (token === "1010") {
+        window.location.href = "https://www.whatsapp.com/channel/0029VbAoVI5Dp2QCayTfuY3p";
+      } else {
+        alert("Token salah!");
+        tokenInput.focus();
+      }
+    }
+
+    window.onclick = function (e) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    };
+
+    // Accessibility: close modal on ESC key
+    window.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && modal.style.display === "flex") {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+
+</html>
