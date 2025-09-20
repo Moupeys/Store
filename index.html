@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WebPeppeyStoreID</title>
+  <style>
+    /* Reset margin dan padding default */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      background: url("image/banner\ treino\ welcome\ discord\ \(1\).jpg") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* Overlay untuk efek gelap di background */
+    .overlay {
+      background: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 40px;
+    }
+
+    /* Header */
+    header {
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    header .menu-icon,
+    header .search-icon {
+      cursor: pointer;
+      font-size: 24px;
+      transition: transform 0.3s ease, color 0.3s ease;
+      user-select: none;
+    }
+
+    header .menu-icon:hover,
+    header .search-icon:hover {
+      transform: scale(1.3);
+      color: #27ae60;
+    }
+
+    /* Profil */
+    .profile {
+      text-align: center;
+      padding: 50px 20px 30px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .profile .avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #27ae60;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
+      transition: transform 0.4s ease;
+    }
+
+    .profile .avatar:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(39, 174, 96, 0.8);
+    }
+
+    .profile p {
+      font-weight: 700;
+      font-size: 22px;
+      text-shadow: 0 3px 6px rgba(0, 0, 0, 0.85);
+      letter-spacing: 0.05em;
+    }
+
+    /* Daftar link */
+    .link-list {
+      max-width: 460px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 16px 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      text-decoration: none;
+      color: #222;
+      font-weight: 600;
+      font-size: 18px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      user-select: none;
+    }
+
+    .link-item:hover,
+    .link-item:focus {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+      background-color: #f0f0f0;
+      outline: none;
+      color: #27ae60;
+    }
+
+    .link-item img {
+      width: 54px;
+      height: 54px;
+      border-radius: 12px;
+      margin-right: 18px;
+      object-fit: cover;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .link-item:hover img,
+    .link-item:focus img {
+      box-shadow: 0 4px 14px rgba(39, 174, 96, 0.7);
+    }
+
+    /* Modal Token */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.35s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal-content {
+      background: #fff;
+      color: #222;
+      padding: 30px 28px;
+      border-radius: 18px;
+      text-align: center;
+      width: 340px;
+      max-width: 90%;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+      animation: scaleUp 0.35s ease forwards;
+      position: relative;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    @keyframes scaleUp {
+      from {
+        transform: scale(0.85);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal-content h3 {
+      margin-bottom: 20px;
+      font-size: 20px;
+      color: #cc0000;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .modal-content input {
+      width: 90%;
+      padding: 12px 14px;
+      border: 1.8px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      font-size: 17px;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+    }
+
+    .modal-content input:focus {
+      border-color: #27ae60;
+      box-shadow: 0 0 8px rgba(39, 174, 96, 0.6);
+    }
+
+    .modal-content button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      background: #27ae60;
+      color: white;
+      cursor: pointer;
+      font-size: 17px;
+      font-weight: 700;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    .modal-content button:hover,
+    .modal-content button:focus {
+      background: #1e8449;
+      outline: none;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-size: 28px;
+      color: #999;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+      color: #333;
+      outline: none;
+    }
+
+    /* Responsive untuk layar kecil */
+    @media (max-width: 480px) {
+      .profile .avatar {
+        width: 110px;
+        height: 110px;
+      }
+
+      .profile p {
+        font-size: 18px;
+      }
+
+      .link-list {
+        max-width: 95%;
+        padding: 0 10px;
+      }
+
+      .link-item {
+        font-size: 16px;
+        padding: 14px 16px;
+      }
+
+      .link-item img {
+        width: 44px;
+        height: 44px;
+        margin-right: 14px;
+      }
+
+      .modal-content {
+        width: 90%;
+        padding: 24px 20px;
+      }
+
+      .modal-content h3 {
+        font-size: 18px;
+      }
+
+      .modal-content input {
+        font-size: 15px;
+      }
+
+      .modal-content button {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="overlay">
+    <header>
+      <div class="menu-icon" title="Menu" tabindex="0" role="button" aria-label="Buka menu">&#9776;</div>
+      <h1>Home</h1>
+      <div class="search-icon" title="Cari" tabindex="0" role="button" aria-label="Cari">&#128269;</div>
+    </header>
+
+    <section class="profile" aria-label="Profil pengguna">
+      <img class="avatar" src="image/ProviL.jpg" alt="Foto Profil PeppeyID" />
+      <p>PeppeyIDStore.com</p>
+    </section>
+
+    <section class="link-list" aria-label="Daftar tautan penting">
+      <a href="https://www.itemku.com/t/peppeyid?search_keyword=PeppeyID&searchquery=PeppeyID&from=searchhomepage"
+        class="link-item" target="_blank" rel="noopener noreferrer" tabindex="0">
+        <img src="image/Keranjang.png" alt="Logo Toko" />
+        <span>TOKO PEPEYID (itemku)</span>
+      </a>
+
+      <a href="https://discord.gg/gdHFsyTdUD" class="link-item" target="_blank" rel="noopener noreferrer" tabindex="0">
+        <img src="image/discord.png" alt="Logo Discord" />
+        <span>Discord Noumui (Buat yg mau Join)</span>
+      </a>
+
+      <a href="index2.html" class="link-item" tabindex="0">
+        <img src="image/saluran WA (1).png" alt="Logo WA Admin" />
+        <span>WA Admin (Belum Ada)</span>
+      </a>
+
+      <a href="#" class="link-item" onclick="openModal()" tabindex="0" role="button" aria-haspopup="dialog"
+        aria-controls="tokenModal">
+        <img src="image/saluran WA.png" alt="Akses Rahasia" />
+        <span>Saluran WA (Token) Hanya cs server</span>
+      </a>
+    </section>
+  </div>
+
+  <!-- Modal Token -->
+  <div id="tokenModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"
+    aria-describedby="modalDesc" tabindex="-1">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()" aria-label="Tutup modal" tabindex="0" role="button">&times;</span>
+      <h3 id="modalTitle">Masukan Token Yang Diberikan Admin</h3>
+      <input type="password" id="tokenInput" placeholder="Token..." aria-describedby="modalDesc" />
+      <br />
+      <button onclick="checkToken()">Masukan</button>
+    </div>
+  </div>
+
+  <script>
+    // Fungsi membuka modal
+    function openModal() {
+      const modal = document.getElementById("tokenModal");
+      modal.style.display = "flex";
+      const input = document.getElementById("tokenInput");
+      input.value = "";
+      input.focus();
+
+      // Fokus trap sederhana
+      trapFocus(modal);
+    }
+
+    // Fungsi menutup modal
+    function closeModal() {
+      const modal = document.getElementById("tokenModal");
+      modal.style.display = "none";
+      // Kembalikan fokus ke link yang membuka modal
+      document.querySelector('.link-item[aria-haspopup="dialog"]').focus();
+    }
+
+    // Fungsi cek token
+    function checkToken() {
+      const token = document.getElementById("tokenInput").value.trim();
+      if (token === "1010") {
+        window.location.href = "https://www.whatsapp.com/channel/0029VbAoVI5Dp2QCayTfuY3p";
+      } else {
+        alert("Token salah!");
+      }
+    }
+
+    // Tutup modal jika klik di luar konten modal
+    window.onclick = function (e) {
+      const modal = document.getElementById("tokenModal");
+      if (e.target === modal) {
+        closeModal();
+      }
+    };
+
+    // Tutup modal dengan tombol ESC
+    window.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    });
+
+    // Fokus trap sederhana untuk modal
+    function trapFocus(element) {
+      const focusableElements = element.querySelectorAll('a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+
+      element.addEventListener('keydown', function (e) {
+        if (e.key === 'Tab') {
+          if (e.shiftKey) { // Shift + Tab
+            if (document.activeElement === firstFocusable) {
+              e.preventDefault();
+              lastFocusable.focus();
+            }
+          } else { // Tab
+            if (document.activeElement === lastFocusable) {
+              e.preventDefault();
+              firstFocusable.focus();
+            }
+          }
+        }
+      });
+    }
+  </script>
+  <div style="
+  overflow:hidden;
+  white-space:nowrap;
+  width:100%;
+  background:#0b1220;
+  padding:12px 0;
+  border-radius:8px;
+">
+    <span style="
+    display:inline-block;
+    padding-left:100%;
+    font-size:28px;
+    font-weight:bold;
+    color:#ffffff;
+    animation:slide 10s linear infinite;
+  ">
+      Pembeli server Premium: AlgA898.e2n1m0r.ErorJImmy.lneagu473n.Ghani489.Ruanz_2.hystersan.BlASAAJAKW.Ynqqt0_6229.FrozzaHolicaz.grautumvb.Xxst11zyxX.sinieoint7.Asyfi28.KILLER_RTX.Migard1.Raen293874.pariupb015.gakpurgyerarp2n.abieelllss.Arfanbezer.BagasGede145.M1_chie09.BuckDanielt1.King_god252.Paistyti0z.seguml12.Vallennsn.Paistyti0z.Assemesxf.
+    </span>
+  </div>
+
+  <style>
+    @keyframes slide {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+  </style>
+
+</body>
+
+</html>
